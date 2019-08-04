@@ -23,7 +23,7 @@ class PageLayout extends Component {
     return (
       <Layout className="layout-container">
         <Header className="layout__header">
-          react start
+          React Start
         </Header>
         <Content className="layout_content">
           <Switch>
