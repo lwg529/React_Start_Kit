@@ -77,6 +77,7 @@ class Demo extends Component {
     const { modalVisible, projectName } = this.state;
     return (
       <div className="demo">
+        <h3>Hello React Start</h3>
         {
         modalVisible ? (
           <Modal
