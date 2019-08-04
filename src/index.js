@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { configure } from 'mobx';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+import { createBrowserHistory } from 'history';
+
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import stores from './module/store';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// don't allow state modifications outside actions
+configure({ enforceActions: 'always' });
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const browserHistory = createBrowserHistory();
+const routingStore = new RouterStore();
+const history = syncHistoryWithStore(browserHistory, routingStore);
+
+const rootStore = {
+  ...stores,
+  router: routingStore,
+  history,
+};
+
+const MOUNT_NODE = document.getElementById('root');
+
+ReactDOM.render(<App store={rootStore} history={history} />, MOUNT_NODE);
